@@ -9,8 +9,8 @@ $loginModel = $this->params['loginModel'] ?? new LoginForm();
 $openLogin = !empty($this->params['openLogin']);
 $selectedRole = $this->params['selectedRole'] ?? '';
 ?>
-<?php $this->beginPage() ?>
-<!DOCTYPE html>
+<?php $this->beginPage() ?> 
+<!DOCTYPE html>    
 <html lang="<?= Yii::$app->language ?>" class="h-full">
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
