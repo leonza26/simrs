@@ -147,7 +147,7 @@ $selectedRole = $this->params['selectedRole'] ?? '';
                 </div>
             </div>
             <div class="border-t border-white/10 mt-16 pt-8 text-center text-sm text-rs-beige/50">
-                <p>&copy; 2024 RSU Sehat Medika Nusantara. Built by M. Leonza Norisevick.</p>
+                <p>&copy; 2026 RSU Sehat Medika Nusantara. Built by M. Leonza Norisevick.</p>
             </div>
         </div>
     </footer>

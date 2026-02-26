@@ -55,7 +55,41 @@ $hospitalName = "RSU SEHAT MEDIKA";
     </style>
     <?php $this->head() ?>
 </head>
-<body class="h-full overflow-hidden text-sm text-gray-700" x-data="{ sidebarOpen: true }">
+<body class="h-full overflow-hidden text-sm text-gray-700" x-data="{ sidebarOpen: true }" x-data="{ 
+    weight: 0, 
+    height: 0, 
+    get imt() { 
+        if (!this.weight || !this.height) return 0;
+        let hMeters = this.height / 100;
+        return (this.weight / (hMeters * hMeters)).toFixed(2);
+    },
+    get imtStatus() {
+        if (this.imt < 18.5) return 'Berat Badan Kurang';
+        if (this.imt < 25) return 'Normal (Ideal)';
+        if (this.imt < 30) return 'Kelebihan Berat Badan';
+        return 'Obesitas';
+    }
+
+    showInvoice: false, 
+    paymentMethod: 'Tunai',
+    selectedPatient: {
+        nama: 'Budi Santoso',
+        rm: '00-12-45',
+        poli: 'Poli Dalam',
+        dokter: 'dr. Andi Wijaya, Sp.PD',
+        items: [
+            { desc: 'Konsultasi Dokter Spesialis', qty: 1, price: 150000 },
+            { desc: 'Tindakan Nebulisasi', qty: 1, price: 75000 },
+            { desc: 'Amoxicillin 500mg', qty: 10, price: 5000 },
+            { desc: 'Paracetamol Syrup', qty: 1, price: 25000 }
+        ]
+    },
+    get subtotal() {
+        return this.selectedPatient.items.reduce((acc, item) => acc + (item.qty * item.price), 0);
+    },
+    get tax() { return this.subtotal * 0.11; },
+    get total() { return this.subtotal + this.tax; }
+}">
 <?php $this->beginBody() ?>
 
     <div class="flex h-screen overflow-hidden">
@@ -80,18 +114,18 @@ $hospitalName = "RSU SEHAT MEDIKA";
                 <!-- Group: Core Operasional -->
                 <div class="px-4 mb-4" x-show="sidebarOpen"><p class="text-[10px] font-bold text-rs-light-green uppercase tracking-widest">Utama</p></div>
                 
-                <a href="<?= Url::to(['/site/index']) ?>" class="flex items-center px-6 py-3 text-white/70 hover:bg-white/5 hover:text-white transition-all group">
+                <a href="<?= Url::to(['/dashboard/index']) ?>" class="flex items-center px-6 py-3 text-white/70 hover:bg-white/5 hover:text-white transition-all group">
                     <i data-lucide="layout-dashboard" class="w-5 h-5 shrink-0 group-hover:text-rs-orange"></i>
                     <span class="ml-4 font-medium transition-opacity" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 invisible whitespace-nowrap'">Dashboard</span>
                 </a>
 
                 <!-- Modul Registrasi (Perawat) -->
-                <a href="<?= Url::to(['/registrasi/index']) ?>" class="flex items-center px-6 py-3 text-white/70 hover:bg-white/5 hover:text-white transition-all group">
+                <a href="<?= Url::to(['/dashboard/registrasi-pasien']) ?>" class="flex items-center px-6 py-3 text-white/70 hover:bg-white/5 hover:text-white transition-all group">
                     <i data-lucide="user-plus" class="w-5 h-5 shrink-0 group-hover:text-rs-orange"></i>
                     <span class="ml-4 font-medium" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 invisible whitespace-nowrap'">Registrasi Pasien</span>
                 </a>
 
-                <a href="<?= Url::to(['/antrean/index']) ?>" class="flex items-center px-6 py-3 text-white/70 hover:bg-white/5 hover:text-white transition-all group">
+                <a href="<?= Url::to(['/dashboard/antrean-poli']) ?>" class="flex items-center px-6 py-3 text-white/70 hover:bg-white/5 hover:text-white transition-all group">
                     <i data-lucide="users" class="w-5 h-5 shrink-0 group-hover:text-rs-orange"></i>
                     <span class="ml-4 font-medium" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 invisible whitespace-nowrap'">Antrean Poli</span>
                 </a>
@@ -99,7 +133,7 @@ $hospitalName = "RSU SEHAT MEDIKA";
                 <!-- Modul EMR (Dokter) -->
                 <div class="px-4 mt-6 mb-4" x-show="sidebarOpen"><p class="text-[10px] font-bold text-rs-light-green uppercase tracking-widest">Medis</p></div>
                 
-                <a href="<?= Url::to(['/pemeriksaan/index']) ?>" class="flex items-center px-6 py-3 text-white/70 hover:bg-white/5 hover:text-white transition-all group">
+                <a href="<?= Url::to(['/dashboard/pemeriksaan-soap']) ?>" class="flex items-center px-6 py-3 text-white/70 hover:bg-white/5 hover:text-white transition-all group">
                     <i data-lucide="stethoscope" class="w-5 h-5 shrink-0 group-hover:text-rs-orange"></i>
                     <span class="ml-4 font-medium" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 invisible whitespace-nowrap'">Pemeriksaan (SOAP)</span>
                 </a>
@@ -107,7 +141,7 @@ $hospitalName = "RSU SEHAT MEDIKA";
                 <!-- Modul Billing (Kasir) -->
                 <div class="px-4 mt-6 mb-4" x-show="sidebarOpen"><p class="text-[10px] font-bold text-rs-light-green uppercase tracking-widest">Keuangan</p></div>
                 
-                <a href="<?= Url::to(['/billing/index']) ?>" class="flex items-center px-6 py-3 text-white/70 hover:bg-white/5 hover:text-white transition-all group">
+                <a href="<?= Url::to(['/dashboard/billing']) ?>" class="flex items-center px-6 py-3 text-white/70 hover:bg-white/5 hover:text-white transition-all group">
                     <i data-lucide="receipt" class="w-5 h-5 shrink-0 group-hover:text-rs-orange"></i>
                     <span class="ml-4 font-medium" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 invisible whitespace-nowrap'">Pembayaran / Billing</span>
                 </a>
