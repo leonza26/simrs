@@ -95,14 +95,14 @@ $adminRole = "System Administrator (IT)";
                 <a href="<?= Url::to(['/admin/management-staff']) ?>" class="flex items-center px-6 py-3 hover:bg-white/5 hover:text-white transition-all group border-r-4 border-transparent">
                     <i data-lucide="users-2" class="w-5 h-5 shrink-0 group-hover:text-rs-orange"></i>
                     <span class="ml-4 font-semibold" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 invisible whitespace-nowrap'">Manajemen Staf</span>
-                </a>
+                </a>  
 
-                <a href="<?= Url::to(['/unit-layanan/index']) ?>" class="flex items-center px-6 py-3 hover:bg-white/5 hover:text-white transition-all group border-r-4 border-transparent">
+                <a href="<?= Url::to(['/admin/unit-tarif']) ?>" class="flex items-center px-6 py-3 hover:bg-white/5 hover:text-white transition-all group border-r-4 border-transparent">
                     <i data-lucide="map" class="w-5 h-5 shrink-0 group-hover:text-rs-orange"></i>
                     <span class="ml-4 font-semibold" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 invisible whitespace-nowrap'">Unit & Tarif</span>
                 </a>
 
-                <a href="<?= Url::to(['/obat/index']) ?>" class="flex items-center px-6 py-3 hover:bg-white/5 hover:text-white transition-all group border-r-4 border-transparent">
+                <a href="<?= Url::to(['/admin/katalog-obat']) ?>" class="flex items-center px-6 py-3 hover:bg-white/5 hover:text-white transition-all group border-r-4 border-transparent">
                     <i data-lucide="package" class="w-5 h-5 shrink-0 group-hover:text-rs-orange"></i>
                     <span class="ml-4 font-semibold" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 invisible whitespace-nowrap'">Katalog Obat</span>
                 </a>
@@ -112,12 +112,12 @@ $adminRole = "System Administrator (IT)";
                     <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Sistem & Keamanan</p>
                 </div>
 
-                <a href="<?= Url::to(['/user/index']) ?>" class="flex items-center px-6 py-3 hover:bg-white/5 hover:text-white transition-all group border-r-4 border-transparent">
+                <a href="<?= Url::to(['/admin/hak-akses']) ?>" class="flex items-center px-6 py-3 hover:bg-white/5 hover:text-white transition-all group border-r-4 border-transparent">
                     <i data-lucide="key-round" class="w-5 h-5 shrink-0 group-hover:text-rs-orange"></i>
                     <span class="ml-4 font-semibold" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 invisible whitespace-nowrap'">Hak Akses (RBAC)</span>
                 </a>
 
-                <a href="<?= Url::to(['/audit-trail/index']) ?>" class="flex items-center px-6 py-3 hover:bg-white/5 hover:text-white transition-all group border-r-4 border-transparent">
+                <a href="<?= Url::to(['admin/audit-trail']) ?>" class="flex items-center px-6 py-3 hover:bg-white/5 hover:text-white transition-all group border-r-4 border-transparent">
                     <i data-lucide="scroll-text" class="w-5 h-5 shrink-0 group-hover:text-rs-orange"></i>
                     <span class="ml-4 font-semibold" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 invisible whitespace-nowrap'">Audit Trail</span>
                 </a>
@@ -127,7 +127,7 @@ $adminRole = "System Administrator (IT)";
                     <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Pelaporan</p>
                 </div>
 
-                <a href="<?= Url::to(['/report/kunjungan']) ?>" class="flex items-center px-6 py-3 hover:bg-white/5 hover:text-white transition-all group border-r-4 border-transparent">
+                <a href="<?= Url::to(['/admin/laporan-kunjungan']) ?>" class="flex items-center px-6 py-3 hover:bg-white/5 hover:text-white transition-all group border-r-4 border-transparent">
                     <i data-lucide="file-bar-chart" class="w-5 h-5 shrink-0 group-hover:text-rs-orange"></i>
                     <span class="ml-4 font-semibold" :class="sidebarOpen ? 'opacity-100' : 'opacity-0 invisible whitespace-nowrap'">Laporan Kunjungan</span>
                 </a>

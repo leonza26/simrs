@@ -62,7 +62,7 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 <div class="wrap flex flex-col min-h-screen">
-    <!-- Navbar Lebih Besar & Bold -->
+    <!-- Navbar Lebih Besar & Bold
     <nav class="bg-white/80 backdrop-blur-md border-b border-slate-200 px-10 py-6 flex items-center justify-between sticky top-0 z-50 shadow-sm">
         <div class="flex items-center space-x-5">
             <div class="p-3 bg-rs-orange rounded-2xl shadow-xl shadow-rs-orange/30">
@@ -100,7 +100,7 @@ AppAsset::register($this);
                 </div>
             <?php endif; ?>
         </div>
-    </nav>
+    </nav> -->
 
     <!-- Main Section -->
     <div class="flex-1 flex flex-col">
