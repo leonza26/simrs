@@ -2,9 +2,27 @@
 
 namespace backend\controllers;
 
+use Yii;
+use common\models\Pegawai;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
+
 class AdminController extends \yii\web\Controller
 {
      public $layout = 'dashboard/main';
+
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete-staff' => ['POST'],
+                ],
+            ],
+        ];
+    }
 
     public function actionIndex()
     {
@@ -12,10 +30,16 @@ class AdminController extends \yii\web\Controller
         return $this->render('index');
     }
 
+
+    // menu management staff
     public function actionManagementStaff()
     {
+
         $this->view->title = 'Management Staff';  
-        return $this->render('management-staff');
+        $dataStaff = Pegawai::find()->with(['peran', 'spesialisasi'])->orderBy(['create_at' => SORT_DESC])->all();
+        return $this->render('management-staff', [
+            'dataStaff' => $dataStaff,
+        ]);
     }
 
     public function actionUnitTarif()

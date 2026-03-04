@@ -49,10 +49,11 @@
                     <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Direktori Pegawai</h2>
                     <p class="text-xs text-slate-400 font-medium">Kelola seluruh data dokter, perawat, dan staf operasional rumah sakit.</p>
                 </div>
-                <button @click="openAddModal = true" class="flex items-center px-6 py-3.5 bg-admin-dark text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-xl shadow-slate-200 hover:bg-rs-orange transition-all transform hover:-translate-y-1">
+                <!-- add link -->
+                <a href="<?= \yii\helpers\Url::to(['/manage-staff/create-staff']) ?>" class="flex items-center px-6 py-3.5 bg-admin-dark text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-xl shadow-slate-200 hover:bg-rs-orange transition-all transform hover:-translate-y-1">
                     <i data-lucide="user-plus" class="w-4 h-4 mr-2"></i>
                     Tambah Pegawai Baru
-                </button>
+                </a>
             </div>
 
             <!-- Filter & Search Bar -->
