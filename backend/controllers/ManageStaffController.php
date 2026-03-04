@@ -12,6 +12,18 @@ class ManageStaffController extends \yii\web\Controller
 {
      public $layout = 'dashboard/main';
 
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete-staff' => ['POST'],
+                ],
+            ],
+        ];
+    }
+
     /**
      * Form tambah pegawai baru
      */

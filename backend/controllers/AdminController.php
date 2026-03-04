@@ -38,7 +38,7 @@ class AdminController extends \yii\web\Controller
         $this->view->title = 'Management Staff';  
         $dataStaff = Pegawai::find()->with(['peran', 'spesialisasi'])->orderBy(['create_at' => SORT_DESC])->all();
         return $this->render('management-staff', [
-            'dataStaff' => $dataStaff,
+            'dataStaff' => $dataStaff, 
         ]);
     }
 

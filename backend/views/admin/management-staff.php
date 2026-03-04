@@ -1,5 +1,7 @@
-    <!DOCTYPE html>
+<?php use yii\helpers\Url; ?>
+<!DOCTYPE html>
     <html lang="id">
+
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +10,7 @@
         <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
         <script src="https://unpkg.com/lucide@latest"></script>
-        
+
         <script>
             tailwind.config = {
                 theme: {
@@ -28,16 +30,29 @@
             }
         </script>
         <style>
-            [x-cloak] { display: none !important; }
-            body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
-            .admin-card { @apply bg-white rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden; }
-            .form-input { @apply w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-rs-orange focus:ring-4 focus:ring-rs-orange/10 outline-none transition-all text-xs font-medium; }
+            [x-cloak] {
+                display: none !important;
+            }
+
+            body {
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                background-color: #f8fafc;
+            }
+
+            .admin-card {
+                @apply bg-white rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden;
+            }
+
+            .form-input {
+                @apply w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-rs-orange focus:ring-4 focus:ring-rs-orange/10 outline-none transition-all text-xs font-medium;
+            }
         </style>
     </head>
+
     <body class="p-4 md:p-8" x-data="{ openAddModal: false, selectedRole: 'Dokter' }">
 
         <div class="max-w-7xl mx-auto space-y-8">
-            
+
             <!-- Header Section -->
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-6" data-aos="fade-down">
                 <div class="space-y-1">
@@ -94,103 +109,66 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-50">
-                            <!-- Dokter -->
-                            <tr class="hover:bg-slate-50/50 transition-colors group">
-                                <td class="px-8 py-6">
-                                    <div class="flex items-center space-x-4">
-                                        <div class="w-12 h-12 bg-rs-orange/10 rounded-2xl flex items-center justify-center font-black text-rs-orange shadow-inner">
-                                            AW
+                            <?php foreach ($dataStaff as $staff): ?>
+                                <!-- Dokter -->
+                                <tr class="hover:bg-slate-50/50 transition-colors group">
+                                    <td class="px-8 py-6">
+                                        <div class="flex items-center space-x-4">
+                                            <div class="w-12 h-12 bg-rs-orange/10 rounded-2xl flex items-center justify-center font-black text-rs-orange shadow-inner">
+                                                AW
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-bold text-slate-800"><?= $staff->nama_pegawai ?></p>
+                                                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">NIP: 19850320202401</p>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <p class="text-sm font-bold text-slate-800">dr. Andi Wijaya, Sp.PD</p>
-                                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">NIP: 19850320202401</p>
+                                    </td>
+                                    <td class="px-8 py-6">
+                                        <div class="flex flex-col">
+                                            <span class="px-3 py-1 bg-rs-orange/10 text-rs-orange text-[9px] font-black rounded-lg uppercase w-fit mb-1.5"><?= $staff->peran->nama_peran ?></span>
+                                            <span class="text-[11px] font-bold text-slate-500 uppercase tracking-tighter">Loket Poli Dalam</span>
                                         </div>
-                                    </div>
-                                </td>
-                                <td class="px-8 py-6">
-                                    <div class="flex flex-col">
-                                        <span class="px-3 py-1 bg-rs-orange/10 text-rs-orange text-[9px] font-black rounded-lg uppercase w-fit mb-1.5">Dokter Spesialis</span>
-                                        <span class="text-[11px] font-bold text-slate-500 uppercase tracking-tighter">Poli Penyakit Dalam</span>
-                                    </div>
-                                </td>
-                                <td class="px-8 py-6">
-                                    <div class="space-y-1">
-                                        <p class="text-[11px] font-medium text-slate-600 flex items-center">
-                                            <i data-lucide="mail" class="w-3 h-3 mr-2 text-slate-300"></i> andi.w@rsusehat.id
-                                        </p>
-                                        <p class="text-[11px] font-medium text-slate-600 flex items-center">
-                                            <i data-lucide="phone" class="w-3 h-3 mr-2 text-slate-300"></i> 0812-xxxx-xxxx
-                                        </p>
-                                    </div>
-                                </td>
-                                <td class="px-8 py-6 text-center">
-                                    <div class="inline-flex items-center px-3 py-1 bg-green-50 text-green-600 rounded-full border border-green-100">
-                                        <span class="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></span>
-                                        <span class="text-[9px] font-black uppercase tracking-widest">Aktif</span>
-                                    </div>
-                                </td>
-                                <td class="px-8 py-6 text-right">
-                                    <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-all">
-                                        <button class="p-2.5 rounded-xl bg-white border border-slate-100 text-slate-400 hover:text-rs-orange hover:border-rs-orange transition-all shadow-sm">
-                                            <i data-lucide="edit-3" class="w-4 h-4"></i>
-                                        </button>
-                                        <button class="p-2.5 rounded-xl bg-white border border-slate-100 text-slate-400 hover:text-red-500 hover:border-red-200 transition-all shadow-sm">
-                                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <!-- Perawat -->
-                            <tr class="hover:bg-slate-50/50 transition-colors group">
-                                <td class="px-8 py-6">
-                                    <div class="flex items-center space-x-4">
-                                        <div class="w-12 h-12 bg-rs-deep-green/10 rounded-2xl flex items-center justify-center font-black text-rs-deep-green shadow-inner">
-                                            LN
+                                    </td>
+                                    <td class="px-8 py-6">
+                                        <div class="space-y-1">
+                                            <p class="text-[11px] font-medium text-slate-600 flex items-center">
+                                                <i data-lucide="mail" class="w-3 h-3 mr-2 text-slate-300"></i> jamelahsalim@rsusehat.id
+                                            </p>
+                                            <p class="text-[11px] font-medium text-slate-600 flex items-center">
+                                                <i data-lucide="phone" class="w-3 h-3 mr-2 text-slate-300"></i> <?= $staff->no_hp ?>
+                                            </p>
                                         </div>
-                                        <div>
-                                            <p class="text-sm font-bold text-slate-800">Leonza Norisevick, Amd.Kep</p>
-                                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">NIP: 19950520202402</p>
+                                    </td>
+                                    <td class="px-8 py-6 text-center">
+                                        <div class="inline-flex items-center px-3 py-1 bg-green-50 text-green-600 rounded-full border border-green-100">
+                                            <?php if ($staff->status_aktif == 1): ?>
+                                                <span class="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></span>
+                                                <span class="text-[9px] font-black uppercase tracking-widest">Aktif</span>
+                                            <?php else: ?>
+                                                <span class="w-1.5 h-1.5 bg-red-500 rounded-full mr-2"></span>
+                                                <span class="text-[9px] font-black uppercase tracking-widest text-red-600">Non-Aktif</span>
+                                            <?php endif; ?>
                                         </div>
-                                    </div>
-                                </td>
-                                <td class="px-8 py-6">
-                                    <div class="flex flex-col">
-                                        <span class="px-3 py-1 bg-rs-deep-green/10 text-rs-deep-green text-[9px] font-black rounded-lg uppercase w-fit mb-1.5">Perawat / Admisi</span>
-                                        <span class="text-[11px] font-bold text-slate-500 uppercase tracking-tighter">Instalasi Gawat Darurat</span>
-                                    </div>
-                                </td>
-                                <td class="px-8 py-6 text-nowrap">
-                                    <div class="space-y-1">
-                                        <p class="text-[11px] font-medium text-slate-600 flex items-center">
-                                            <i data-lucide="mail" class="w-3 h-3 mr-2 text-slate-300"></i> leonza.n@rsusehat.id
-                                        </p>
-                                        <p class="text-[11px] font-medium text-slate-600 flex items-center">
-                                            <i data-lucide="phone" class="w-3 h-3 mr-2 text-slate-300"></i> 0813-xxxx-xxxx
-                                        </p>
-                                    </div>
-                                </td>
-                                <td class="px-8 py-6 text-center">
-                                    <div class="inline-flex items-center px-3 py-1 bg-green-50 text-green-600 rounded-full border border-green-100">
-                                        <span class="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></span>
-                                        <span class="text-[9px] font-black uppercase tracking-widest">Aktif</span>
-                                    </div>
-                                </td>
-                                <td class="px-8 py-6 text-right">
-                                    <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-all">
-                                        <button class="p-2.5 rounded-xl bg-white border border-slate-100 text-slate-400 hover:text-rs-orange hover:border-rs-orange transition-all shadow-sm">
-                                            <i data-lucide="edit-3" class="w-4 h-4"></i>
-                                        </button>
-                                        <button class="p-2.5 rounded-xl bg-white border border-slate-100 text-slate-400 hover:text-red-500 hover:border-red-200 transition-all shadow-sm">
-                                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                    <td class="px-8 py-6 text-right">
+                                        <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-all">
+                                            <a href="<?= Url::to(['/management-staff/update-staff', 'id' => $staff->id]) ?>" class="p-2.5 rounded-xl bg-white border border-slate-100 text-slate-400 hover:text-rs-orange hover:border-rs-orange transition-all shadow-sm">
+                                                <i data-lucide="edit-3" class="w-4 h-4"></i>
+                                            </a>
+                                            <a href="<?= Url::to(['/management-staff/delete-staff', 'id' => $staff->id]) ?>" 
+                                               class="p-2.5 rounded-xl bg-white border border-slate-100 text-slate-400 hover:text-red-500 hover:border-red-200 transition-all shadow-sm"
+                                               data-method="post"
+                                               data-confirm="Apakah Anda yakin ingin menghapus data pegawai ini?">
+                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
-                
+
                 <!-- Pagination -->
                 <div class="px-8 py-6 bg-slate-50/30 border-t border-slate-50 flex items-center justify-between">
                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Menampilkan 2 dari 48 Pegawai</p>
@@ -204,7 +182,7 @@
         </div>
 
         <!-- Modal Tambah Pegawai -->
-        <div x-show="openAddModal" 
+        <div x-show="openAddModal"
             x-transition:enter="transition ease-out duration-300"
             x-transition:enter-start="opacity-0 scale-95"
             x-transition:enter-end="opacity-100 scale-100"
@@ -239,7 +217,7 @@
                                 <option value="Admin IT">Admin IT</option>
                             </select>
                         </div>
-                        
+
                         <!-- Dinamis jika Dokter -->
                         <template x-if="selectedRole === 'Dokter'">
                             <div class="md:col-span-2 grid md:grid-cols-2 gap-6 p-6 bg-rs-beige/20 rounded-3xl border border-rs-beige/30">
@@ -273,7 +251,7 @@
                             <button @click="openAddModal = false" class="px-6 py-3 text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-slate-600 transition-colors">Batal</button>
                             <button class="px-8 py-3 bg-rs-orange text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-rs-orange/20 hover:bg-opacity-90 transition-all">Simpan Pegawai</button>
                         </div>
-                    </div>  
+                    </div>
                 </div>
             </div>
         </div>
@@ -281,8 +259,12 @@
         <!-- AOS & Lucide Init -->
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
         <script>
-            AOS.init({ duration: 800, once: true });
+            AOS.init({
+                duration: 800,
+                once: true
+            });
             lucide.createIcons();
         </script>
     </body>
+
     </html>
