@@ -1,4 +1,6 @@
 <?php use yii\helpers\Url; ?>
+<?php use yii\helpers\Html; ?>
+
 <!DOCTYPE html>
     <html lang="id">
 
@@ -152,15 +154,20 @@
                                     </td>
                                     <td class="px-8 py-6 text-right">
                                         <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-all">
-                                            <a href="<?= Url::to(['/management-staff/update-staff', 'id' => $staff->id]) ?>" class="p-2.5 rounded-xl bg-white border border-slate-100 text-slate-400 hover:text-rs-orange hover:border-rs-orange transition-all shadow-sm">
+                                            <a href="<?= Url::to(['/manage-staff/update-staff', 'id' => $staff->id_pegawai]) ?>" class="p-2.5 rounded-xl bg-white border border-slate-100 text-slate-400 hover:text-rs-orange hover:border-rs-orange transition-all shadow-sm">
                                                 <i data-lucide="edit-3" class="w-4 h-4"></i>
                                             </a>
-                                            <a href="<?= Url::to(['/management-staff/delete-staff', 'id' => $staff->id]) ?>" 
-                                               class="p-2.5 rounded-xl bg-white border border-slate-100 text-slate-400 hover:text-red-500 hover:border-red-200 transition-all shadow-sm"
-                                               data-method="post"
-                                               data-confirm="Apakah Anda yakin ingin menghapus data pegawai ini?">
-                                                <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                            </a>
+                                            <?= Html::a(
+                                            '<i data-lucide="trash-2" class="w-4 h-4"></i>',
+                                            ['/manage-staff/delete-staff', 'id' => $staff->id_pegawai],
+                                            [
+                                                'class' => 'p-2.5 rounded-xl bg-white border border-slate-100 text-slate-400 hover:text-red-500 hover:border-red-200 transition-all shadow-sm',
+                                                'data' => [
+                                                    'method' => 'post',
+                                                    'confirm' => 'Apakah Anda yakin ingin menghapus data pegawai ini?',
+                                                ],
+                                            ]
+                                        ) ?>
                                         </div>
                                     </td>
                                 </tr>

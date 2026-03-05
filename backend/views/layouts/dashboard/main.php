@@ -2,13 +2,20 @@
 /** @var yii\web\View $this */
 /** @var string $content */
 
+
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 // Data Admin (Simulasi Yii::$app->user->identity)
 $adminName = "M. Leonza Norisevick";
 $adminRole = "System Administrator (IT)";
+
 ?>
+<?php
+use backend\assets\AppAsset;
+AppAsset::register($this);
+?>
+
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>" class="h-full bg-slate-50">
