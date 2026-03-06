@@ -1,41 +1,9 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unit & Tarif | Admin SIMRS</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'rs-orange': '#E67E22',
-                        'rs-deep-green': '#628141',
-                        'rs-light-green': '#8BAE66',
-                        'rs-beige': '#EBD5AB',
-                        'admin-dark': '#1e293b',
-                    },
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        [x-cloak] { display: none !important; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
-        .admin-card { @apply bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden; }
-        .form-input { @apply w-full px-6 py-4 rounded-2xl border-2 border-slate-100 bg-slate-50 focus:bg-white focus:border-rs-orange focus:ring-8 focus:ring-rs-orange/5 outline-none transition-all text-sm font-bold text-slate-800 placeholder:text-slate-300; }
-    </style>
-</head>
-<body class="p-4 md:p-10" x-data="{ openUnitModal: false, editMode: false }">
+<style>
+    .admin-card { @apply bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden; }
+    .form-input { @apply w-full px-6 py-4 rounded-2xl border-2 border-slate-100 bg-slate-50 focus:bg-white focus:border-rs-orange focus:ring-8 focus:ring-rs-orange/5 outline-none transition-all text-sm font-bold text-slate-800 placeholder:text-slate-300; }
+</style>
 
+<div x-data="{ openUnitModal: false, editMode: false }">
     <div class="max-w-7xl mx-auto space-y-10">
         
         <!-- Header Section -->
@@ -49,10 +17,10 @@
                 <h2 class="text-4xl font-black text-slate-900 tracking-tighter">Konfigurasi Layanan</h2>
                 <p class="text-base text-slate-400 font-medium">Atur poliklinik, spesialisasi, dan standarisasi tarif pendaftaran.</p>
             </div>
-            <button @click="openUnitModal = true; editMode = false" class="flex items-center px-10 py-5 bg-admin-dark text-white rounded-[2rem] text-xs font-black uppercase tracking-[0.3em] shadow-[0_20px_50px_-10px_rgba(30,41,59,0.3)] hover:bg-rs-orange hover:shadow-rs-orange/30 transition-all transform hover:-translate-y-1 active:scale-95">
+            <a href="<?= \yii\helpers\Url::to(['/unit-tarif/create-unit']) ?>" class="flex items-center px-10 py-5 bg-admin-dark text-white rounded-[2rem] text-xs font-black uppercase tracking-[0.3em] shadow-[0_20px_50px_-10px_rgba(30,41,59,0.3)] hover:bg-rs-orange hover:shadow-rs-orange/30 transition-all transform hover:-translate-y-1 active:scale-95">
                 <i data-lucide="layout-grid" class="w-5 h-5 mr-3"></i>
                 Tambah Unit Baru
-            </button>
+            </a>
         </div>
 
         <!-- Stats Grid (Contextual) -->
@@ -117,6 +85,7 @@
                     </thead>
                     <tbody class="divide-y divide-slate-50">
                         <!-- Unit 1 -->
+                         <?php foreach ($unitTarif as $unit): ?>
                         <tr class="hover:bg-slate-50/80 transition-all group">
                             <td class="px-10 py-8">
                                 <div class="flex items-center space-x-6">
@@ -124,8 +93,8 @@
                                         UM
                                     </div>
                                     <div>
-                                        <p class="text-base font-black text-slate-800 tracking-tight uppercase">Poliklinik Umum</p>
-                                        <p class="text-xs text-slate-400 font-bold tracking-widest mt-1">ID: UNIT-001</p>
+                                        <p class="text-base font-black text-slate-800 tracking-tight uppercase"><?= $unit->nama_unit ?></p>
+                                        <p class="text-xs text-slate-400 font-bold tracking-widest mt-1">ID: <?= $unit->kode_unit ?></p>
                                     </div>
                                 </div>
                             </td>
@@ -155,6 +124,7 @@
                                 </div>
                             </td>
                         </tr>
+                        <?php endforeach; ?>
                         <!-- Unit 2 -->
                         <tr class="hover:bg-slate-50/80 transition-all group">
                             <td class="px-10 py-8">
@@ -211,6 +181,7 @@
     </div>
 
     <!-- Modal: Unit Editor -->
+    <template x-teleport="body">
     <div x-show="openUnitModal" 
          x-transition:enter="transition ease-out duration-300"
          x-transition:enter-start="opacity-0 scale-95"
@@ -283,12 +254,6 @@
             </div>
         </div>
     </div>
+    </template>
 
-    <!-- AOS & Lucide Init -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({ duration: 800, once: true });
-        lucide.createIcons();
-    </script>
-</body>
-</html>
+</div>

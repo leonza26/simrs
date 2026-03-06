@@ -2,10 +2,8 @@
 
 namespace backend\controllers;
 
-use Yii;
 use common\models\Pegawai;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use common\models\UnitLayanan;
 use yii\filters\VerbFilter;
 
 class AdminController extends \yii\web\Controller
@@ -44,8 +42,11 @@ class AdminController extends \yii\web\Controller
 
     public function actionUnitTarif()
     {
-        $this->view->title = 'Unit & Tarif';  
-        return $this->render('unit-tarif');
+        $this->view->title = 'Unit & Tarif';
+        $unitTarif = UnitLayanan::find()->all(); // Ambil data unit tarif dari model UnitTarif
+        return $this->render('unit-tarif', [
+            'unitTarif' => $unitTarif,
+        ]);  
     }
 
      public function actionKatalogObat()

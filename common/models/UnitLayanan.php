@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "unit_layanan".
@@ -32,6 +33,7 @@ class UnitLayanan extends \yii\db\ActiveRecord
         return [
             [['nama_unit'], 'required'],
             [['status_aktif'], 'boolean'],
+            [['tarif_dasar', 'kategori_spesialis'], 'integer'],
             [['nama_unit'], 'string', 'max' => 100],
             [['kode_unit'], 'string', 'max' => 10],
             [['kode_unit'], 'unique'],
@@ -47,6 +49,8 @@ class UnitLayanan extends \yii\db\ActiveRecord
             'id_unit' => 'Id Unit',
             'nama_unit' => 'Nama Unit',
             'kode_unit' => 'Kode Unit',
+            'tarif_dasar' => 'Tarif Dasar Pendaftaran (Rp)',
+            'kategori_spesialis' => 'Kategori Spesialis',
             'status_aktif' => 'Status Aktif',
         ];
     }
@@ -57,5 +61,16 @@ class UnitLayanan extends \yii\db\ActiveRecord
     public function getPendaftarans()
     {
         return $this->hasMany(Pendaftaran::className(), ['id_unit' => 'id_unit']);
+    }
+
+     public static function getListSpesialisasi()
+    {
+        // Asumsi model Spesialisasi sudah ada sesuai skema sebelumnya
+        return ArrayHelper::map(Spesialisasi::find()->all(), 'id_spesialisasi', 'nama_spesialisasi');
+    }
+
+    public function getSpesialisasi()
+    {
+        return $this->hasOne(Spesialisasi::className(), ['id_spesialisasi' => 'kategori_spesialis']);
     }
 }
