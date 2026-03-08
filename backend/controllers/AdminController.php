@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\Pegawai;
 use common\models\UnitLayanan;
+use Yii;
 use yii\filters\VerbFilter;
 
 class AdminController extends \yii\web\Controller
@@ -42,10 +43,26 @@ class AdminController extends \yii\web\Controller
 
     public function actionUnitTarif()
     {
+        $countUnit = UnitLayanan::find()->count();
         $this->view->title = 'Unit & Tarif';
+
+        $search = Yii::$app->request->get('search');
+
+        
+
         $unitTarif = UnitLayanan::find()->all(); // Ambil data unit tarif dari model UnitTarif
+        
+        if ($search) {
+            $unitTarif = UnitLayanan::find()
+                ->where(['ilike', 'nama_unit', $search])
+                ->orWhere(['ilike', 'kategori_spesialis', $search])
+                ->all();
+        }
+
         return $this->render('unit-tarif', [
             'unitTarif' => $unitTarif,
+            'countUnit' => $countUnit,
+            'search' => $search,
         ]);  
     }
 

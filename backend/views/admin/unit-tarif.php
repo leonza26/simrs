@@ -28,7 +28,7 @@
             <div class="admin-card !p-8 flex items-center justify-between group">
                 <div>
                     <p class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-2">Total Poliklinik</p>
-                    <h3 class="text-4xl font-black text-slate-800 tracking-tighter">12 Unit</h3>
+                    <h3 class="text-4xl font-black text-slate-800 tracking-tighter"><?= $countUnit ?> Unit</h3>
                 </div>
                 <div class="w-16 h-16 bg-rs-orange/10 text-rs-orange rounded-3xl flex items-center justify-center">
                     <i data-lucide="building-2" class="w-8 h-8"></i>
@@ -58,10 +58,12 @@
         <div class="admin-card overflow-hidden" data-aos="fade-up" data-aos-delay="200">
             <!-- Table Action Bar -->
             <div class="p-10 border-b border-slate-50 flex flex-col lg:flex-row lg:items-center justify-between gap-6 bg-slate-50/30">
-                <div class="relative flex-1 max-w-xl">
-                    <i data-lucide="search" class="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
-                    <input type="text" placeholder="Cari nama unit atau spesialisasi..." class="w-full pl-16 pr-8 py-4 bg-white border-2 border-slate-100 rounded-[1.5rem] text-sm font-bold focus:ring-4 focus:ring-rs-orange/10 outline-none transition-all">
-                </div>
+                <form method="GET" action="">
+                    <div class="relative flex-1 max-w-xl">
+                        <i data-lucide="search" class="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
+                        <input type="text" name="search" value="<?= Yii::$app->request->get('search') ?>" placeholder="Cari nama unit atau spesialisasi..." class="w-full pl-16 pr-8 py-4 bg-white border-2 border-slate-100 rounded-[1.5rem] text-sm font-bold focus:ring-4 focus:ring-rs-orange/10 outline-none transition-all">
+                    </div>
+                </form>
                 <div class="flex items-center gap-4">
                     <button class="flex items-center px-6 py-4 bg-white border-2 border-slate-100 rounded-2xl text-[11px] font-black uppercase tracking-widest text-slate-500 hover:border-rs-orange hover:text-rs-orange transition-all">
                         <i data-lucide="download-cloud" class="w-4 h-4 mr-2"></i> Ekspor PDF
@@ -85,7 +87,10 @@
                     </thead>
                     <tbody class="divide-y divide-slate-50">
                         <!-- Unit 1 -->
-                         <?php foreach ($unitTarif as $unit): ?>
+                         <?php
+                         use yii\helpers\Url;
+                            use yii\helpers\Html;
+                          foreach ($unitTarif as $unit): ?>
                         <tr class="hover:bg-slate-50/80 transition-all group">
                             <td class="px-10 py-8">
                                 <div class="flex items-center space-x-6">
@@ -100,70 +105,40 @@
                             </td>
                             <td class="px-10 py-8">
                                 <div class="flex flex-col">
-                                    <span class="text-sm font-bold text-rs-deep-green tracking-tight">Dokter Umum / General</span>
-                                    <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">3 Dokter Terdaftar</span>
+                                    <span class="text-sm font-bold text-rs-deep-green tracking-tight"><?= $unit->spesialisasi->nama_spesialisasi ?></span>
                                 </div>
                             </td>
                             <td class="px-10 py-8">
                                 <div class="flex flex-col">
-                                    <span class="text-lg font-black text-slate-800 tracking-tighter italic">Rp 50.000</span>
+                                    <span class="text-lg font-black text-slate-800 tracking-tighter italic">Rp. <?= number_format($unit->tarif_dasar, 0, ',', '.') ?></span>
                                     <span class="text-[9px] text-slate-400 font-black uppercase tracking-widest mt-1">Biaya Administrasi</span>
                                 </div>
                             </td>
                             <td class="px-10 py-8 text-center">
+                                <?php if ($unit->status_aktif == 1): ?>
                                 <span class="px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest bg-rs-light-green/10 text-rs-light-green border border-rs-light-green/20">Aktif</span>
+                                <?php endif; ?>
                             </td>
                             <td class="px-10 py-8 text-right">
                                 <div class="flex items-center justify-end gap-3 opacity-0 group-hover:opacity-100 transition-all">
-                                    <button @click="openUnitModal = true; editMode = true" class="p-3.5 rounded-2xl bg-white border-2 border-slate-100 text-slate-400 hover:text-rs-orange hover:border-rs-orange transition-all shadow-sm">
+                                    <a href="<?= Url::to(['/unit-tarif/update-unit', 'id' => $unit->id_unit]) ?>" class="p-3.5 rounded-2xl bg-white border-2 border-slate-100 text-slate-400 hover:text-rs-orange hover:border-rs-orange transition-all shadow-sm">
                                         <i data-lucide="edit-2" class="w-5 h-5"></i>
-                                    </button>
-                                    <button class="p-3.5 rounded-2xl bg-white border-2 border-slate-100 text-slate-400 hover:text-red-500 hover:border-red-200 transition-all shadow-sm">
-                                        <i data-lucide="trash-2" class="w-5 h-5"></i>
-                                    </button>
+                                    </a>
+                                     <?= Html::a(
+                                            '<i data-lucide="trash-2" class="w-4 h-4"></i>',
+                                            ['/unit-tarif/delete-unit', 'id' => $unit->id_unit],
+                                            [
+                                                'class' => 'p-2.5 rounded-xl bg-white border border-slate-100 text-slate-400 hover:text-red-500 hover:border-red-200 transition-all shadow-sm',
+                                                'data' => [
+                                                    'method' => 'post',
+                                                    'confirm' => 'Apakah Anda yakin ingin menghapus data unit tarif ini?',
+                                                ],
+                                            ]
+                                        ) ?>
                                 </div>
                             </td>
                         </tr>
                         <?php endforeach; ?>
-                        <!-- Unit 2 -->
-                        <tr class="hover:bg-slate-50/80 transition-all group">
-                            <td class="px-10 py-8">
-                                <div class="flex items-center space-x-6">
-                                    <div class="w-14 h-14 bg-slate-100 rounded-2xl flex items-center justify-center font-black text-slate-400 text-lg group-hover:bg-rs-orange group-hover:text-white transition-all">
-                                        PD
-                                    </div>
-                                    <div>
-                                        <p class="text-base font-black text-slate-800 tracking-tight uppercase">Poli Penyakit Dalam</p>
-                                        <p class="text-xs text-slate-400 font-bold tracking-widest mt-1">ID: UNIT-002</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-10 py-8">
-                                <div class="flex flex-col">
-                                    <span class="text-sm font-bold text-rs-deep-green tracking-tight">Spesialis Penyakit Dalam (Sp.PD)</span>
-                                    <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">2 Dokter Terdaftar</span>
-                                </div>
-                            </td>
-                            <td class="px-10 py-8">
-                                <div class="flex flex-col">
-                                    <span class="text-lg font-black text-slate-800 tracking-tighter italic">Rp 150.000</span>
-                                    <span class="text-[9px] text-slate-400 font-black uppercase tracking-widest mt-1">Biaya Administrasi</span>
-                                </div>
-                            </td>
-                            <td class="px-10 py-8 text-center">
-                                <span class="px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest bg-rs-light-green/10 text-rs-light-green border border-rs-light-green/20">Aktif</span>
-                            </td>
-                            <td class="px-10 py-8 text-right">
-                                <div class="flex items-center justify-end gap-3 opacity-0 group-hover:opacity-100 transition-all">
-                                    <button class="p-3.5 rounded-2xl bg-white border-2 border-slate-100 text-slate-400 hover:text-rs-orange hover:border-rs-orange transition-all shadow-sm">
-                                        <i data-lucide="edit-2" class="w-5 h-5"></i>
-                                    </button>
-                                    <button class="p-3.5 rounded-2xl bg-white border-2 border-slate-100 text-slate-400 hover:text-red-500 hover:border-red-200 transition-all shadow-sm">
-                                        <i data-lucide="trash-2" class="w-5 h-5"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>

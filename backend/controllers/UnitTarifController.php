@@ -16,7 +16,7 @@ class UnitTarifController extends \yii\web\Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', "Unit {$model->nama_unit} berhasil ditambahkan.");
-            return $this->redirect(['unit-tarif']);
+            return $this->redirect(['admin/unit-tarif']);
         }
 
         return $this->render('create', [
@@ -33,7 +33,7 @@ class UnitTarifController extends \yii\web\Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', "Konfigurasi {$model->nama_unit} berhasil diperbarui.");
-            return $this->redirect(['unit-tarif']);
+            return $this->redirect(['admin/unit-tarif']);
         }
 
         return $this->render('update', [
